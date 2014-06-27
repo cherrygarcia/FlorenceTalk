@@ -92,5 +92,43 @@ datacomp$cmatAgeevenworse<-rnorm(nrow(datacomp), mean=datacomp$cmatAge, sd=12)
 validationcomp<-datacomp[!is.na(datacomp$mmatAge),]
 cor(validationcomp$cmatAgeevenworse, validationcomp$mmatAge)
 
-plot(validationcomp$mmatAge, validationcomp$cmatAge, xlab="Mother-reported, years", ylab="Adolescent-reported, years")
-abline(0,1)
+setwd("/Users/kararudolph/Documents/JHSPHpostdoc/measurementErrorImputation")
+validationcomp<-read.csv("validationcomp.csv", header=TRUE)
+
+png("corxw.png")
+ggplot(validationcomp, aes(x=mmatAge, y=cmatAge)) +
+    geom_point(shape=3,  position=position_jitter(width=.5,height=.5)) + theme_bw() + xlab("Mother-reported, years")  + ylab("Adolescent-reported, years")  + geom_abline()
+dev.off()
+
+validationcomp$tertscore<-factor(validationcomp$tertscore)
+
+png("corxwbytx.png")
+ggplot(validationcomp, aes(x=mmatAge, y=cmatAge, color=tertscore)) +
+    geom_point(shape=3,  position=position_jitter(width=.5,height=.5)) + theme_bw() + xlab("Mother-reported, years")  + ylab("Adolescent-reported, years")  + geom_abline()+ scale_colour_discrete(name="Neighborhood",
+                         breaks=c(1, 0),
+                         labels=c("Disadvantaged", "Non-disadvantaged"))
+dev.off()
+
+png("corxwbytxloc.png")
+ggplot(validationcomp, aes(x=mmatAge, y=cmatAgeworsecdifME + 27, color=tertscore)) +
+    geom_point(shape=3,  position=position_jitter(width=.5,height=.5)) + theme_bw() + xlab("Mother-reported, years")  + ylab("Adolescent-reported, years") +  geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)+ scale_colour_discrete(name="Neighborhood",
+                         breaks=c(1, 0),
+                         labels=c("Disadvantaged", "Non-disadvantaged"))
+dev.off()
+
+png("corxwbytxscale.png")
+ggplot(validationcomp, aes(x=mmatAge, y=cmatAgescalecdifME + 27, color=tertscore)) +
+    geom_point(shape=3,  position=position_jitter(width=.5,height=.5)) + theme_bw() + xlab("Mother-reported, years")  + ylab("Adolescent-reported, years")  +   geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)+ scale_colour_discrete(name="Neighborhood",
+                         breaks=c(1, 0),
+                         labels=c("Disadvantaged", "Non-disadvantaged"))
+dev.off()
+
+png("corxwbytxlocscale.png")
+ggplot(validationcomp, aes(x=mmatAge, y=cmatAgescaleclocdifME + 27, color=tertscore)) +
+    geom_point(shape=3,  position=position_jitter(width=.5,height=.5)) + theme_bw() + xlab("Mother-reported, years")  + ylab("Adolescent-reported, years")   +  geom_smooth(method=lm,   # Add linear regression line
+                se=FALSE)+ scale_colour_discrete(name="Neighborhood",
+                         breaks=c(1, 0),
+                         labels=c("Disadvantaged", "Non-disadvantaged"))
+dev.off()
