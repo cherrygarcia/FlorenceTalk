@@ -3,9 +3,34 @@
 <br>
 
 ### Elizabeth Stuart
-### Kara Rudolph
+
+and [insert other folks here]
+
+<br>
+<br>
+<br>
+
+Grant #123
 
 Note: 
+
+---
+
+## Agenda
+<br>
+
+1. Background
+	* Motivation
+	* Previous Research
+	* Goal
+2. Methods
+	* Notation
+	* Estimands and Estimators
+	* Simulation Set-Up
+3. Results
+	* Simulation
+	* Illustrative Example
+4. Conclusions
 
 ---
 
@@ -22,22 +47,50 @@ Balancing score property of propensity scores (PS) assumes that:
 ## Motivation
 <br>
 
-In reality, covariate measurement error may be the rule rather than the exception. 
-
-* self-reported measures: household income, weight, age of parents.
-
-* imperfect instruments: blood pressure, cortisol levels.
-
-* latent constructs: depression, disability.
-
-<br>
-
-Researchers left with the choice: exclude mismeasured covariates from PS model or ignore the measurement error. 
+* In reality, covariate measurement error may be the rule rather than the exception. 
+	* self-reported measures: household income, weight, age of parents.
+	* imperfect instruments: blood pressure, cortisol levels.
+	* latent constructs: depression, disability.
 
 Note: 
 
 ---
 
+## Motivation
+<br>
+
+* In reality, covariate measurement error may be the rule rather than the exception. 
+	* self-reported measures: household income, weight, age of parents.
+	* imperfect instruments: blood pressure, cortisol levels.
+	* latent constructs: depression, disability.
+
+<br>
+
+* Covariate measurement error may compromise the bias-reduction potential of propensity scores if treatment assignment depends on the true, unobserved covariate.
+
+Note: 
+
+---
+
+## Motivation
+<br>
+
+* In reality, covariate measurement error may be the rule rather than the exception. 
+	* self-reported measures: household income, weight, age of parents.
+	* imperfect instruments: blood pressure, cortisol levels.
+	* latent constructs: depression, disability.
+
+<br>
+
+* Covariate measurement error may compromise the bias-reduction potential of propensity scores if treatment assignment depends on the true, unobserved covariate.
+
+<br>
+
+* Researchers left with the choice: exclude mismeasured covariates from PS model or ignore the measurement error. 
+
+Note: 
+
+---
 ## Previous Research
 <br>
 
@@ -145,43 +198,32 @@ Note:
 
 ---
 
-## Data Generating Mechanism
+## Notation
 <br>
 
 Let observed data $O=(W, Y, A, Z)$ and complete data $C=(W, Y, A, X, Z)$, where:
 <br>
 <br>
 
-* $Z$ = observed, continuous covariate. $Z \sim Normal(1, 1)$
+* $Y$ = observed, continuous outcome of interest. 
 
-* $X$ = unobserved, continuous covariate. $X \sim Normal(1 + 0.2 Z, 1)$
+* $A$ = observed, binary (0/1) variable indicating treatment. 
 
-* $W$ = observed, mismeasured version of $X$, $W \sim Normal(X + 2A, 0.5(1 + A)^2)$ (Note that a more general version of measurement error differential by treatment status could be written: $W \sim Normal(\gamma f(X,A), \sigma^2(\delta f(X,A))^2)$)
+* $Z$ = observed, continuous covariate. 
 
-* $A$ = observed, binary (0/1) variable indicating treatment. $A \sim Bernoulli(-2log(2) + log(2) \times X + log(2) \times Z)$
+* $X$ = unobserved, continuous covariate. 
 
-* $Y$ = observed, continuous outcome of interest. $Y \sim Normal(3 A + 2X + 2 Z, 1)$
+* $W$ = observed, mismeasured version of $X$, where the mismeasurement depends on the tratment. $W \sim Normal(f(X,A), \sigma^2f(X,A)^2)$
+
 
 Note:
 
 ---
 
-## Estimands and Estimators
+## Estimand and Estimators
 <br>
 
-Estimands: ATE and ATT
-
-Why both? 
-
-* Non-differential covariate measurement error  : unobserved confounding
-* Covariate measurement error differential by Tx status : unobserved effect modification. ATE $\ne$ ATT in sample.
-
----
-
-## Estimands and Estimators
-<br>
-
-Estimands: ATE and ATT
+Estimand: ATE 
 
 <br>
 Estimator: IPTW
@@ -190,10 +232,10 @@ Estimator: IPTW
 
 ---
 
-## Estimands and Estimators
+## Estimand and Estimators
 <br>
 
-Estimands: ATE and ATT
+Estimands: ATE
 
 Estimator: IPTW
 
@@ -216,19 +258,36 @@ Note:
 
 ---
 
-## Bayesian Sensitivity Analysis for Covariate Measurement Error
+## Simulation Set-Up
 <br>
 
-* Point mass priors on coefficients in measurement error model:
+Let observed data $O=(W, Y, A, Z)$ and complete data $C=(W, Y, A, X, Z)$, where:
+<br>
+<br>
+
+* $Y \sim Normal(3 A + 2X + 2 Z, 1)$
+
+* $A \sim Bernoulli(-2log(2) + log(2) \times X + log(2) \times Z)$ 
+
+* $Z \sim Normal(1, 1)$
+
+* $X \sim Normal(1 + 0.2 Z, 1)$
+
+* $W \sim Normal(X + 2A, 0.5(1 + A)^2)$
+
+Note:
+
+---
+
+## Simulation Set-Up
+<br>
+
+* Point mass priors on coefficients $(\gamma, \delta)$ in measurement error model:
 
 <br>
 
-$$ \begin{eqnarray}
-(W \vert Y, X, A, Z) &\sim& N(X + \gamma A, \sigma^2_{U,A=0}(1 + \delta A)^2)\\\
-&\sim& N(X + 2A, 0.5(1 + A)^2)\\\
-\text{so } (W \vert X, A=1) &\sim& N(X + 2, 2)\\\
-(W \vert X, A=0) &\sim& N(X, 0.5)
-\end{eqnarray} $$
+$$ 
+(W \vert Y, X, A, Z) \sim N(X + \gamma A, \sigma^2_{U,A=0}(1 + \delta A)^2)$$
 
 <br>
 
@@ -242,7 +301,7 @@ Note:
 
 ---
 
-## Bayesian Sensitivity Analysis for Covariate Measurement Error
+## Simulation Results
 
 <img src="./BayesianMESummary-007.png" width="800" height="700">
 
@@ -250,7 +309,7 @@ Note:
 
 ---
 
-## Bayesian Sensitivity Analysis for Covariate Measurement Error
+## Simulation Results
 <br>
 
 <img src="./ATEsim.png" width="800" height="700">
@@ -260,7 +319,7 @@ Note:
 
 ---
 
-## Results
+## Simulation Results
 <br>
 
 * Differential measurement error in variance (heteroscedasticity) less important than differential measurement error in the mean (agrees with Spiegelman et al., 2011).
@@ -303,13 +362,25 @@ Association between living in a disadvantaged neighborhood and past-year drug ab
 
 <br>
 
-$X$: mother-reported maternal age at birth 
+* $X$: Mother-reported maternal age at birth 
 
-$W$: adolescent-reported maternal age at birth
+* $W$: Adolescent-reported maternal age at birth. Could be reported differently by neighborhood disadvantage status.
+	* Adolescents in disadvantaged neighborhoods may think that their mothers are older than they actually are.
+	* Adolescents in disadvantaged neighborhoods may be less accurate in guessing their mother's age than adolescents in nondisadvantaged neighborhoods.
+
+Note: 
+
+---
+
+
+## Example Data: Measurement Error
+
+<br>
+
+* We use subset where both $X$ and $W$ are observed to evaluate how the method works.
 
 <img src="./observeddata.png" width="700" height="500">
 
-* We use subset where both $X$ and $W$ are observed to evaluate how the method works.
 
 Note: 
 
@@ -400,6 +471,23 @@ Note:
 
 ---
 
+## Example Data: Results
+<br>
+$W$ with simulated additional measurement error that is differential in the location and scale parameters ($\rho=0.7$)
+<br>
+
+[insert figure]
+
+Note: 
+
+---
+
+## Future Work
+<br>
+
+
+---
+
 ## Conclusions
 <br>
 
@@ -407,12 +495,4 @@ Note:
 Note:
 
 
----
 
-## Future Work
-<br>
-
----
-
-## Acknowledgements
-<br>
