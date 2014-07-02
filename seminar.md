@@ -476,7 +476,7 @@ Note:
 $W$ with simulated additional measurement error that is differential in the location and scale parameters ($\rho=0.7$)
 <br>
 
-[insert figure]
+<img src="./gammadeltarealdatamini.png" width="750" height="680">
 
 Note: 
 
